@@ -1,0 +1,34 @@
+{
+  "name": "fis2.0-employee",
+  "version": "1.0.0",
+  "description": "Master data management for employees",
+  "main": "index.js",
+  "scripts": {
+    "clean": "/bin/rm -fr build/tmp/* build/*zip",
+    "lint": "node_modules/jshint/bin/jshint src/ test/",
+    "test": "lab -r console -o stdout -r html -o build/report/coverage.html -r lcov -o build/report/lcov.info",
+    "package": "pushd build/tmp && cp -rf ../../package.json ../../src/* . && npm i --production && zip -r -1 ../skill.zip * && popd",
+    "update": "aws lambda update-function-code --function-name senacorTechnologies --region eu-west-1 --zip-file fileb://build/skill.zip",
+    "invoke": "aws lambda invoke --function-name senacorTechnologies --region eu-west-1 --payload file://test/testevent.json out.json"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/koenighotze/fis2.0.employee.git"
+  },
+  "author": "David Schmitz",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/koenighotze/fis2.0.employee/issues"
+  },
+  "homepage": "https://github.com/koenighotze/fis2.0.employee#readme",
+  "devDependencies": {
+    "chai": "^4.1.2",
+    "chai-string": "^1.4.0",
+    "chai-things": "^0.2.0",
+    "istanbul": "^0.4.5",
+    "jshint": "^2.9.5",
+    "lab": "^15.1.2",
+    "mocha": "^4.0.1",
+    "sinon": "^4.1.3"
+  }
+}
