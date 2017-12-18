@@ -2,14 +2,18 @@
   "name": "fis2.0-employee",
   "version": "1.0.0",
   "description": "Master data management for employees",
-  "main": "index.js",
+  "main": "src/index.js",
   "scripts": {
     "clean": "/bin/rm -fr build/tmp/* build/*zip",
     "lint": "node_modules/jshint/bin/jshint src/ test/",
     "test": "lab -r console -o stdout -r html -o build/report/coverage.html -r lcov -o build/report/lcov.info",
-    "package": "pushd build/tmp && cp -rf ../../package.json ../../src/* . && npm i --production && zip -r -1 ../skill.zip * && popd",
-    "update": "aws lambda update-function-code --function-name senacorTechnologies --region eu-west-1 --zip-file fileb://build/skill.zip",
-    "invoke": "aws lambda invoke --function-name senacorTechnologies --region eu-west-1 --payload file://test/testevent.json out.json"
+    "package": "pushd build/tmp && cp -rf ../../package.json ../../src/* . && npm i --production && zip -r -1 ../employee.zip * && popd",
+    "lamdba.describe.GetEmployees": "aws lambda get-function --function-name Fis2_0-Employees-GetEmployees",
+    "lambda.invoke.GetEmployees": "aws lambda invoke --function-name Fis2_0-Employees-GetEmployees out.txt",
+    "sam.package": "npm run package && sam package --template-file employee.yaml  --s3-bucket dschmitz.fis.2.0.employee --output-template-file build/employee-packaged.yaml",
+    "sam.deploy": "npm run sam.package && sam deploy  --template-file ./build/employee-packaged.yaml --stack-name fis-2-0-employee --capabilities CAPABILITY_NAMED_IAM",
+    "cf.clean": "aws cloudformation delete-stack --stack-name fis-2-0-employee",
+    "cf.logs": "aws cloudformation describe-stack-events --stack-name fis-2-0-employee"
   },
   "repository": {
     "type": "git",
