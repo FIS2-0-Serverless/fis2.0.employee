@@ -8,7 +8,6 @@ Globals:
     Runtime: nodejs6.10
     Timeout: 3
     Handler: index.handler
-    CodeUri: build/employee.zip
     MemorySize: 128
     Tags:
       CostCenter: Tecco
@@ -49,6 +48,7 @@ Resources:
             - sts:AssumeRole
       ManagedPolicyArns:
           - arn:aws:iam::aws:policy/AWSLambdaExecute
+          - arn:aws:iam::aws:policy/AWSXrayWriteOnlyAccess
 
   GetEmployees:
     Type: AWS::Serverless::Function
@@ -58,6 +58,7 @@ Resources:
       CodeUri: build/employee.zip
       Handler: index.getAll
       Role: !GetAtt GetEmployeesRole.Arn
+      Tracing: Active
 
   # GetEmployeeById:
   #   Type: AWS::Serverless::Function

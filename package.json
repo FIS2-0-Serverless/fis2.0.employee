@@ -9,11 +9,12 @@
     "test": "lab -r console -o stdout -r html -o build/report/coverage.html -r lcov -o build/report/lcov.info",
     "package": "pushd build/tmp && cp -rf ../../package.json ../../src/* . && npm i --production && zip -r -1 ../employee.zip * && popd",
     "lamdba.describe.GetEmployees": "aws lambda get-function --function-name Fis2_0-Employees-GetEmployees",
-    "lambda.invoke.GetEmployees": "aws lambda invoke --function-name Fis2_0-Employees-GetEmployees out.txt",
+    "lambda.invoke.GetEmployees": "aws lambda invoke --function-name Fis2_0-Employees-GetEmployees --payload file://test/testevent.json out.txt",
     "sam.package": "npm run package && sam package --template-file employee.yaml  --s3-bucket dschmitz.fis.2.0.employee --output-template-file build/employee-packaged.yaml",
     "sam.deploy": "npm run sam.package && sam deploy  --template-file ./build/employee-packaged.yaml --stack-name fis-2-0-employee --capabilities CAPABILITY_NAMED_IAM",
     "cf.clean": "aws cloudformation delete-stack --stack-name fis-2-0-employee",
-    "cf.logs": "aws cloudformation describe-stack-events --stack-name fis-2-0-employee"
+    "cf.logs": "aws cloudformation describe-stack-events --stack-name fis-2-0-employee",
+    "aws.logs": "awslogs get /aws/lambda/Fis2_0-Employees-GetEmployees"
   },
   "repository": {
     "type": "git",
@@ -34,5 +35,9 @@
     "lab": "^15.1.2",
     "mocha": "^4.0.1",
     "sinon": "^4.1.3"
+  },
+  "dependencies": {
+    "aws-xray-sdk-core": "^1.1.6",
+    "util": "^0.10.3"
   }
 }
