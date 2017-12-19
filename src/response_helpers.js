@@ -14,6 +14,10 @@ const buildResponse = (result, callback) => {
   return result
           .then(data => {
             callback(null, {
+              headers: {
+                "Access-Control-Allow-Origin" : "*", // Required for CORS support to work
+                "Access-Control-Allow-Credentials" : true // Required for cookies, authorization headers with HTTPS
+              },
               statusCode: data ? 200 : 404,
               body: data ? JSON.stringify(data) : ''
             })
