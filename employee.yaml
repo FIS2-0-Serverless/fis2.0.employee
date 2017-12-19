@@ -5,10 +5,10 @@ Description: Master data management for employees
 
 Globals:
   Function:
-    Runtime: nodejs6.10
-    Timeout: 3
-    Handler: index.handler
-    MemorySize: 128
+    # Runtime: nodejs6.10
+    # Timeout: 3
+    # Handler: index.handler
+    # MemorySize: 128
     Tags:
       CostCenter: Tecco
       Owner: dschmitz
@@ -31,6 +31,9 @@ Parameters:
   NamePrefix:
     Type: String
     Default: "Fis2_0-Employees-"
+  # CodeLocation:
+  #   Type: String
+  #   # Default: "build/employee.zip"
 
 Resources:
   GetEmployeesRole:
@@ -53,12 +56,42 @@ Resources:
   GetEmployees:
     Type: AWS::Serverless::Function
     Properties:
+      Runtime: nodejs6.10
+      Timeout: 3
+      MemorySize: 128
       FunctionName: !Sub "${NamePrefix}GetEmployees"
       Description: "Get all known employees"
-      CodeUri: build/employee.zip
+      CodeUri: .
       Handler: index.getAll
       Role: !GetAtt GetEmployeesRole.Arn
       Tracing: Active
+      Events:
+        ListEmployees:
+          Type: Api
+          Properties:
+            Path: /employee
+            Method: get
+
+  GetEmployee:
+    Type: AWS::Serverless::Function
+    Properties:
+      Runtime: nodejs6.10
+      Timeout: 3
+      Handler: index.handler
+      MemorySize: 128
+      FunctionName: !Sub "${NamePrefix}GetEmployee"
+      Description: "Get employee by id"
+      CodeUri: .
+      Handler: index.getById
+      Role: !GetAtt GetEmployeesRole.Arn
+      Tracing: Active
+      Events:
+        GetEmployee:
+          Type: Api
+          Properties:
+            Path: /employee/{id}
+            Method: get
+
 
   # GetEmployeeById:
   #   Type: AWS::Serverless::Function

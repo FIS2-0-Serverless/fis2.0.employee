@@ -7,7 +7,7 @@
     "clean": "/bin/rm -fr build/tmp/* build/*zip",
     "lint": "node_modules/jshint/bin/jshint src/ test/",
     "test": "lab -r console -o stdout -r html -o build/report/coverage.html -r lcov -o build/report/lcov.info",
-    "package": "pushd build/tmp && cp -rf ../../package.json ../../src/* . && npm i --production && zip -r -1 ../employee.zip * && popd",
+    "package": "pushd build/tmp && cp -rf ../../package.json ../../src/* ../../index.js . && npm i --production && zip -r -1 ../employee.zip * && popd",
     "lamdba.describe.GetEmployees": "aws lambda get-function --function-name Fis2_0-Employees-GetEmployees",
     "lambda.invoke.GetEmployees": "aws lambda invoke --function-name Fis2_0-Employees-GetEmployees --payload file://test/testevent.json out.txt",
     "sam.package": "npm run package && sam package --template-file employee.yaml  --s3-bucket dschmitz.fis.2.0.employee --output-template-file build/employee-packaged.yaml",
@@ -38,6 +38,7 @@
   },
   "dependencies": {
     "aws-xray-sdk-core": "^1.1.6",
+    "joi": "^12.0.0",
     "util": "^0.10.3"
   }
 }
