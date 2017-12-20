@@ -13,13 +13,14 @@ const prepareErrorResponse = (error) => {
 const buildResponse = (result, callback) => {
   return result
           .then(data => {
+            console.log("Returning ", data)
             callback(null, {
               headers: {
                 "Access-Control-Allow-Origin" : "*", // Required for CORS support to work
-                "Access-Control-Allow-Credentials" : true // Required for cookies, authorization headers with HTTPS
+                "Access-Control-Allow-Credentials" : "true" // Required for cookies, authorization headers with HTTPS
               },
               statusCode: data ? 200 : 404,
-              body: data ? JSON.stringify(data) : ''
+              body: JSON.stringify(data || {})
             })
           })
           .catch(e => {

@@ -12,6 +12,7 @@
     "lambda.invoke.GetEmployees": "aws lambda invoke --function-name Fis2_0-Employees-GetEmployees --payload file://test/testevent.json out.txt",
     "sam.package": "npm run package && sam package --template-file employee.yaml  --s3-bucket dschmitz.fis.2.0.employee --output-template-file build/employee-packaged.yaml",
     "sam.deploy": "npm run sam.package && sam deploy  --template-file ./build/employee-packaged.yaml --stack-name fis-2-0-employee --capabilities CAPABILITY_NAMED_IAM",
+    "sam.start-api": "sam local start-api --template employee.yaml",
     "cf.clean": "aws cloudformation delete-stack --stack-name fis-2-0-employee",
     "cf.logs": "aws cloudformation describe-stack-events --stack-name fis-2-0-employee",
     "aws.logs": "awslogs get /aws/lambda/Fis2_0-Employees-GetEmployees"

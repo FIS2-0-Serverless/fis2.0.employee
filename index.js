@@ -5,8 +5,9 @@ const Joi = require('joi')
 
 const getEmployees = require('src/get_employees')
 const getEmployee = require('src/get_employee')
-const ResponseHelpers = require('src/response_helpers')
+const getContract = require('src/get_contract')
 
+const ResponseHelpers = require('src/response_helpers')
 
 module.exports = {
   getAll(event, context, callback) {
@@ -19,6 +20,16 @@ module.exports = {
 
     const result = Joi.validate(pathParameters, schema)
                       .then(id => getEmployee(id))
+
+    ResponseHelpers.buildResponse(result, callback)
+  },
+  getContractByEmployee({ pathParameters }, context, callback) {
+    const schema = {
+      'id': Joi.string()
+    }
+
+    const result = Joi.validate(pathParameters, schema)
+                      .then(id => getContract(id))
 
     ResponseHelpers.buildResponse(result, callback)
   }

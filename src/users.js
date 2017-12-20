@@ -1,3 +1,24 @@
+const capitalizeFirst = (s) => s[0].toUpperCase() + s.slice(1)
+
+const cleanup = (user) => {
+    user.name.first = capitalizeFirst(user.name.first)
+    user.name.last = capitalizeFirst(user.name.last)
+    user.name.title = capitalizeFirst(user.name.title)
+
+    user.location.city = capitalizeFirst(user.location.city)
+    user.location.state = capitalizeFirst(user.location.state)
+
+    const [number, street] = user.location.street.split(' ')
+
+    user.location.street = capitalizeFirst(street)
+    user.location.streetnumber = number
+
+    user.healthInsurance = { insuranceType: "Mandated", insuranceName: "Wizzzzard Health", socialSecurityNumber: "65 170839 J 003", lastMandatedHealthInsurance: "", parenthood: "no", disabled: "no" }
+    user.bankAccount = { iban: "NL04RABO0370786848", holderLastname: "", holderFirstname: "", bic: "COBADEFF"}
+
+    return user
+}
+
 module.exports = {
     "users": [
         {
@@ -190,5 +211,5 @@ module.exports = {
             "nat": "DE",
             "phone": "0975-4506143"
         }
-    ]
+    ].map(cleanup)
 }

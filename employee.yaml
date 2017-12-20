@@ -77,7 +77,6 @@ Resources:
     Properties:
       Runtime: nodejs6.10
       Timeout: 3
-      Handler: index.handler
       MemorySize: 128
       FunctionName: !Sub "${NamePrefix}GetEmployee"
       Description: "Get employee by id"
@@ -90,6 +89,25 @@ Resources:
           Type: Api
           Properties:
             Path: /employee/{id}
+            Method: get
+
+  GetContractByEmployee:
+    Type: AWS::Serverless::Function
+    Properties:
+      Runtime: nodejs6.10
+      Timeout: 3
+      MemorySize: 128
+      FunctionName: !Sub "${NamePrefix}GetContractByEmployee"
+      Description: "Get contract for an employee"
+      CodeUri: .
+      Handler: index.getContractByEmployee
+      Role: !GetAtt GetEmployeesRole.Arn
+      Tracing: Active
+      Events:
+        GetEmployee:
+          Type: Api
+          Properties:
+            Path: /employee/{id}/contract
             Method: get
 
 

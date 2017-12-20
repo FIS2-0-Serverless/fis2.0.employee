@@ -10,11 +10,5 @@ module.exports = function ( { id } ) {
     const user = users.users.find(user => user.id == id)
 
     res(user)
-    // if (user) {
-    //   res(user)
-    // }
-    // else {
-    //   rej()
-    // }
   })
 }
