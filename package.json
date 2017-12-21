@@ -15,7 +15,8 @@
     "sam.start-api": "sam local start-api --template employee.yaml",
     "cf.clean": "aws cloudformation delete-stack --stack-name fis-2-0-employee",
     "cf.logs": "aws cloudformation describe-stack-events --stack-name fis-2-0-employee",
-    "aws.logs": "awslogs get /aws/lambda/Fis2_0-Employees-GetEmployees"
+    "aws.logs": "awslogs get /aws/lambda/Fis2_0-Employees-GetEmployees",
+    "dynamodb.start-local": "java -Djava.library.path=$DYNAMODB/DynamoDBLocal_lib -jar $DYNAMODB/DynamoDBLocal.jar -sharedDb -inMemory"
   },
   "repository": {
     "type": "git",
