@@ -1,7 +1,7 @@
-const users = require('./users')
+const db = require('./db')
 
 module.exports = function () {
-  return new Promise((res, rej) => {
-    res(users)
-  })
+  return db.getEmployees()
+           .then(employees => ( { users: employees } ))
+           .catch(e => Promise.reject(e))
 }

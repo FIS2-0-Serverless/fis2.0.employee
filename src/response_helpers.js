@@ -13,6 +13,7 @@ const prepareErrorResponse = (error) => {
 const buildResponse = (result, callback) => {
   return result
           .then(data => {
+            console.log('Building response for', data)
             callback(null, {
               headers: {
                 "Access-Control-Allow-Origin" : "*", // Required for CORS support to work
@@ -23,6 +24,7 @@ const buildResponse = (result, callback) => {
             })
           })
           .catch(e => {
+            console.warn('Error while handling employees', e)
             callback(null, prepareErrorResponse(e))
           })
 }

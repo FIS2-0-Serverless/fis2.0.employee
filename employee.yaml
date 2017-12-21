@@ -5,10 +5,6 @@ Description: Master data management for employees
 
 Globals:
   Function:
-    # Runtime: nodejs6.10
-    # Timeout: 3
-    # Handler: index.handler
-    # MemorySize: 128
     Tags:
       CostCenter: Tecco
       Owner: dschmitz
@@ -31,9 +27,6 @@ Parameters:
   NamePrefix:
     Type: String
     Default: "Fis2_0-Employees-"
-  # CodeLocation:
-  #   Type: String
-  #   # Default: "build/employee.zip"
 
 Resources:
   GetEmployeesRole:
@@ -52,6 +45,7 @@ Resources:
       ManagedPolicyArns:
           - arn:aws:iam::aws:policy/AWSLambdaExecute
           - arn:aws:iam::aws:policy/AWSXrayWriteOnlyAccess
+          - arn:aws:iam::604370441254:policy/Fis2_0-Employees-GetEmployeesPolicy
 
   GetEmployees:
     Type: AWS::Serverless::Function
@@ -110,6 +104,18 @@ Resources:
             Path: /employee/{id}/contract
             Method: get
 
+  # EmployeeDynamoDBTable:
+  #     Type: AWS::DynamoDB::Table
+  #     Properties:
+  #       AttributeDefinitions:
+  #         - AttributeName: id
+  #           AttributeType: S
+  #       KeySchema:
+  #         - AttributeName: id
+  #           KeyType: HASH
+  #       ProvisionedThroughput:
+  #         ReadCapacityUnits: 5
+  #         WriteCapacityUnits: 5
 
   # GetEmployeeById:
   #   Type: AWS::Serverless::Function
