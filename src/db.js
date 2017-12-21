@@ -42,7 +42,6 @@ module.exports = {
     const users = require('./users').users
 
     const inserts = users.map(user => {
-      user.id = uuidv4()
       console.log('Inserting user', user)
 
       const params = {

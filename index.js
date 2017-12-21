@@ -22,15 +22,5 @@ module.exports = {
                       .then(id => getEmployee(id))
 
     ResponseHelpers.buildResponse(result, callback)
-  },
-  getContractByEmployee({ pathParameters }, context, callback) {
-    const schema = {
-      'id': Joi.string()
-    }
-
-    const result = Joi.validate(pathParameters, schema)
-                      .then(id => getContract(id))
-
-    ResponseHelpers.buildResponse(result, callback)
   }
 }
